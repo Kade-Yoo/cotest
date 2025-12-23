@@ -3,6 +3,7 @@ package kr.leetcode
 /**
  * 1922. Count Good Numbers
  *
+ * modulo -> % MOD (등치 관계 적용)
  * https://leetcode.com/problems/count-good-numbers/
  */
 class CountGoodNumbers {
