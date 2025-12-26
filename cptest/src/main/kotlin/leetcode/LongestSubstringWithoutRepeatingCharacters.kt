@@ -1,63 +1,36 @@
 package kr.leetcode
 
+import java.util.*
+
 /**
  * 3. Longest Substring Without Repeating Characters
  *
- * 카데인 알고리즘 써야하는데.. 어렵네..
  * https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
  */
 class LongestSubstringWithoutRepeatingCharacters {
 
+    /**
+     * Queue를 이용하여 현재 index에 char값이 queue에 속해있으면
+     * 해당 값까지 Queue에서 요소를 제거한다. (O(1))
+     * 제거 해준 후 Queue size에 max값을 구한다. (O(n))
+     */
     fun lengthOfLongestSubstring(s: String): Int {
-        if (s.isEmpty()) {
-            return 0
-        }
-
-        if (s.length == 1) {
-            return 1
-        }
-
-        var maxLengthString = s.toCharArray().first().toString()
-        var maxLength = maxLengthString.length
-
-        var index = 1
-        var indexAfterStart = 0
-        while(index < s.length) {
-            val char = s.toCharArray()[index]
-            if (maxLengthString.contains(char)) {
-                index = indexAfterStart
-                maxLengthString = s.toCharArray()[indexAfterStart].toString()
-                indexAfterStart += 1
-            } else {
-                maxLengthString += char
-            }
-
-            if (maxLength < maxLengthString.length) {
-                maxLength = maxLengthString.length
-            }
-
-            index++
-        }
-
-        return maxLength
-    }
-
-    fun lengthOfLongestSubstringBySlidingWindow(s: String): Int {
-        if (s.isEmpty()) {
-            return 0
-        }
+        if (s.isEmpty()) return 0
+        if (s.length == 1) return 1
 
         var maxLength = 0
-        val charSet = mutableSetOf<Char>()
-        var left = 0
+        val subStringQueue: Queue<Char> = LinkedList()
 
-        for (right in s.indices) {
-            while (charSet.contains(s[right])) {
-                charSet.remove(s[left])
-                left++
+        subStringQueue.add(s.first())
+        (1 ..< s.length).forEach { i ->
+            while (subStringQueue.contains(s[i])) {
+                subStringQueue.poll()
             }
-            charSet.add(s[right])
-            maxLength = maxOf(maxLength, right - left + 1)
+
+            subStringQueue.add(s[i])
+            if (subStringQueue.size > maxLength) {
+                maxLength = subStringQueue.size
+            }
         }
 
         return maxLength
