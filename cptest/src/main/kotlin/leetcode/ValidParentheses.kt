@@ -1,9 +1,6 @@
 package kr.leetcode
 
-import java.util.LinkedList
-import java.util.Queue
-import java.util.Stack
-import java.util.Vector
+import java.util.*
 
 /**
  * 20. Valid Parentheses
